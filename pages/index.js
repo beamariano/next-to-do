@@ -3,28 +3,80 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Center,
+  Container,
   Flex,
+  Heading,
+  HStack,
   Input,
   Link,
   ListItem,
   Text,
   UnorderedList,
   VStack,
-  HStack,
-  Container,
 } from "@chakra-ui/react";
 
-const Home = ({ data }) => {
-  console.log(data);
-  const [tasks, setTasks] = useState(data);
-  const [item, setItem] = useState("");
+import { v4 as uuidv4 } from "uuid";
+import ToDoTable from "../src/components/ToDoTable";
+
+const Home = () => {
+  const [tasks, setTasks] = useState([
+    {
+      date_added: "1656574906",
+      name: "task1",
+      priority: "priority 1",
+      status: "pending",
+      id: "1",
+    },
+    {
+      date_added: "1656574906",
+      name: "task1",
+      priority: "priority 1",
+      status: "pending",
+      id: "1",
+    },
+    {
+      date_added: "1656574906",
+      name: "task1",
+      priority: "priority 1",
+      status: "pending",
+      id: "1",
+    },
+    {
+      date_added: "1656574906",
+      name: "task1",
+      priority: "priority 1",
+      status: "pending",
+      id: "1",
+    },
+    {
+      date_added: "1656574906",
+      name: "task1",
+      priority: "priority 1",
+      status: "pending",
+      id: "1",
+    },
+  ]);
+
+  const [newItem, setNewItem] = useState("");
+  const [newItemPriority, setNewItemPriority] = useState("high");
+  const [newItemStatus, setNewItemStatus] = useState("pending");
 
   const addItem = () => {
-    if (item !== "" && !tasks.includes(item)) {
-      let temp = tasks;
-      temp.push(item);
-      setTasks(temp);
-      setItem("");
+    let newItemObject = {
+      id: uuidv4(),
+      name: newItem,
+      date_added: new Date(),
+      priority: newItemPriority,
+      status: newItemStatus,
+    };
+    if (newItem !== "" && !tasks.includes(newItem)) {
+      let temporaryArrayIncludingNewItem = tasks;
+      temporaryArrayIncludingNewItem.push(newItemObject);
+      setTasks(temporaryArrayIncludingNewItem);
+      setNewItem("");
+    } else {
+      alert("This task already exists");
     }
   };
 
@@ -45,25 +97,20 @@ const Home = ({ data }) => {
     console.log(taskId);
   };
 
-  useEffect(() => {
-    if (data) {
-      setTasks(data);
-    }
-  }, []);
-
   return (
-    <Container>
+    <Container border="2px solid black" maxWidth="100%">
       <VStack>
-        <HStack>
+        <Heading as="h1" mt="50px">
+          To-Do App
+        </Heading>
+        <HStack justifyContent="space-between" py="50px">
           <Input
-            w="50%"
-            mt="50px"
             placeholder="Item Name"
-            value={item}
+            value={newItem}
             onChange={(e) => {
-              setItem(e.target.value);
+              setNewItem(e.target.value);
             }}
-          ></Input>
+          />
           <Button
             onClick={() => {
               addItem();
@@ -72,25 +119,14 @@ const Home = ({ data }) => {
             Add Item
           </Button>
         </HStack>
-
-        <UnorderedList>
-          {tasks.map((task, index) => {
-            return (
-              <ListItem key={index}>
-                <HStack>
-                  <Text>{task.name}</Text>
-                  <Button onClick={done}>Done</Button>
-                  <Button ml={10} onClick={() => editItem(task.id)}>
-                    Edit
-                  </Button>
-                  <Button ml={10} onClick={() => removeItem(taskem.id)}>
-                    X{" "}
-                  </Button>
-                </HStack>
-              </ListItem>
-            );
-          })}
-        </UnorderedList>
+        <Container>
+          <ToDoTable
+            tasks={tasks}
+            done={done}
+            editItem={editItem}
+            removeItem={removeItem}
+          />
+        </Container>
       </VStack>
     </Container>
   );
