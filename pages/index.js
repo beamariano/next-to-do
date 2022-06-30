@@ -9,6 +9,9 @@ import {
   ListItem,
   Text,
   UnorderedList,
+  VStack,
+  HStack,
+  Container,
 } from "@chakra-ui/react";
 
 const Home = ({ data }) => {
@@ -23,6 +26,10 @@ const Home = ({ data }) => {
       setTasks(temp);
       setItem("");
     }
+  };
+
+  const done = () => {
+    console.log("done");
   };
 
   const removeItem = (taskName) => {
@@ -45,58 +52,59 @@ const Home = ({ data }) => {
   }, []);
 
   return (
-    <Box>
-      <Flex
-        justifyContent="center"
-        alignItems="center"
-        width="100%"
-        height="100%"
-        flexDirection="column"
-      >
-        <Input
-          placeholder="Item Name"
-          value={item}
-          onChange={(e) => {
-            setItem(e.target.value);
-          }}
-        ></Input>
-        <Button
-          onClick={() => {
-            addItem();
-          }}
-        >
-          Add Item
-        </Button>
+    <Container>
+      <VStack>
+        <HStack>
+          <Input
+            w="50%"
+            mt="50px"
+            placeholder="Item Name"
+            value={item}
+            onChange={(e) => {
+              setItem(e.target.value);
+            }}
+          ></Input>
+          <Button
+            onClick={() => {
+              addItem();
+            }}
+          >
+            Add Item
+          </Button>
+        </HStack>
+
         <UnorderedList>
-          {tasks.map((item, index) => {
-            console.log(item);
+          {tasks.map((task, index) => {
             return (
               <ListItem key={index}>
-                <Text>{item.task}</Text>
-                <Button ml={10} onClick={() => editItem(item.id)}>
-                  Edit
-                </Button>
-                <Button ml={10} onClick={() => removeItem(item.id)}>
-                  Remove
-                </Button>
+                <HStack>
+                  <Text>{task.name}</Text>
+                  <Button onClick={done}>Done</Button>
+                  <Button ml={10} onClick={() => editItem(task.id)}>
+                    Edit
+                  </Button>
+                  <Button ml={10} onClick={() => removeItem(taskem.id)}>
+                    X{" "}
+                  </Button>
+                </HStack>
               </ListItem>
             );
           })}
         </UnorderedList>
-      </Flex>
-    </Box>
+      </VStack>
+    </Container>
   );
 };
-export const getStaticProps = async () => {
-  const url = "https://62b1788dc7e53744afb9d5c9.mockapi.io/api/tasks";
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    return { props: { data } };
-  } catch {
-    // 404 ERROR
-    return { props: null };
-  }
-};
+// export const getStaticProps = async () => {
+//   const url = "https://62b1788dc7e53744afb9d5c9.mockapi.io/api/tasks";
+//   try {
+//     const res = await fetch(url);
+//     const data = await res.json();
+//     return { props: { data } };
+//   } catch {
+//     // 404 ERROR
+//     return { props: null };
+//   }
+// };
 
 export default Home;
