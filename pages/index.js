@@ -22,39 +22,39 @@ import ToDoTable from "../src/components/ToDoTable";
 const Home = () => {
   const [tasks, setTasks] = useState([
     {
-      date_added: "1656574906",
-      name: "task1",
+      id: 1,
+      date_due: "Jan 4",
+      name: "task 1",
       priority: "priority 1",
       status: "pending",
-      id: "1",
     },
     {
-      date_added: "1656574906",
-      name: "task1",
+      id: 2,
+      date_due: "Jan 6",
+      name: "task 2",
       priority: "priority 1",
       status: "pending",
-      id: "1",
     },
     {
-      date_added: "1656574906",
-      name: "task1",
+      id: 3,
+      date_due: "March 20",
+      name: "task 3",
       priority: "priority 1",
       status: "pending",
-      id: "1",
     },
     {
-      date_added: "1656574906",
-      name: "task1",
+      id: 4,
+      date_due: "Dec 12",
+      name: "task 4",
       priority: "priority 1",
       status: "pending",
-      id: "1",
     },
     {
-      date_added: "1656574906",
-      name: "task1",
+      id: 5,
+      date_due: "October 23",
+      name: "task 5",
       priority: "priority 1",
       status: "pending",
-      id: "1",
     },
   ]);
 
@@ -66,7 +66,7 @@ const Home = () => {
     let newItemObject = {
       id: uuidv4(),
       name: newItem,
-      date_added: new Date(),
+      date_due: new Date(),
       priority: newItemPriority,
       status: newItemStatus,
     };
@@ -119,14 +119,16 @@ const Home = () => {
             Add Item
           </Button>
         </HStack>
-        <Container>
-          <ToDoTable
-            tasks={tasks}
-            done={done}
-            editItem={editItem}
-            removeItem={removeItem}
-          />
-        </Container>
+        <Center>
+          <Container maxW="1440px" w="100%">
+            <ToDoTable
+              tasks={tasks}
+              done={done}
+              editItem={editItem}
+              removeItem={removeItem}
+            />
+          </Container>
+        </Center>
       </VStack>
     </Container>
   );

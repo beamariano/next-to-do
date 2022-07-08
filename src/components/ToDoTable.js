@@ -29,7 +29,7 @@ const ToDoTable = ({ tasks }) => {
   return (
     <TableContainer w="100%">
       <Table variant="simple">
-        <TableCaption>Notes</TableCaption>
+        {/* <TableCaption>Notes</TableCaption> */}
         <Thead>
           <Tr>
             <Th>Task Name</Th>
@@ -39,28 +39,37 @@ const ToDoTable = ({ tasks }) => {
           </Tr>
         </Thead>
         <Tbody>
-          <UnorderedList>
-            {tasks.map((task, index) => (
-              <ListItem key={index}>
-                <Tr>
-                  <Flex dir="row" justifyContent="space-between">
-                    <Box>
-                      <Text>{task.name}</Text>
-                    </Box>
-                    <HStack spacing={2}>
-                      <Button onClick={() => done(task.id)}>Done</Button>
-                      <Button ml={10} onClick={() => editItem(task.id)}>
-                        Edit
-                      </Button>
-                      <Button ml={10} onClick={() => removeItem(task.id)}>
-                        X
-                      </Button>
-                    </HStack>
-                  </Flex>
-                </Tr>
-              </ListItem>
-            ))}
-          </UnorderedList>
+          {/* <UnorderedList> */}
+          {tasks.map((task, index) => (
+            <Tr key={index}>
+              <Td>
+                <Box>
+                  <Text>{task.name}</Text>
+                </Box>
+              </Td>
+              <Td>
+                <Text>{task.status}</Text>
+              </Td>
+              <Td>
+                <Text>{task.priority}</Text>
+              </Td>
+              <Td>
+                <Text>{task.date_due}</Text>
+              </Td>
+              <Td>
+                <HStack spacing={1}>
+                  <Button onClick={() => done(task.id)}>Done</Button>
+                  <Button ml={10} onClick={() => editItem(task.id)}>
+                    Edit
+                  </Button>
+                  <Button ml={10} onClick={() => removeItem(task.id)}>
+                    X
+                  </Button>
+                </HStack>
+              </Td>
+            </Tr>
+          ))}
+          {/* </UnorderedList> */}
         </Tbody>
       </Table>
     </TableContainer>
