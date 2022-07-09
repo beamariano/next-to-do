@@ -18,6 +18,7 @@ import {
 
 import { v4 as uuidv4 } from "uuid";
 import ToDoTable from "../src/components/ToDoTable";
+import NewTaskForm from "../src/components/NewTaskForm";
 
 const Home = () => {
   const [tasks, setTasks] = useState([
@@ -62,30 +63,24 @@ const Home = () => {
   const [newItemPriority, setNewItemPriority] = useState("high");
   const [newItemStatus, setNewItemStatus] = useState("pending");
 
-  const addItem = () => {
-    let newItemObject = {
-      id: uuidv4(),
-      name: newItem,
-      date_due: new Date(),
-      priority: newItemPriority,
-      status: newItemStatus,
-    };
-    if (newItem !== "" && !tasks.includes(newItem)) {
-      let temporaryArrayIncludingNewItem = tasks;
-      temporaryArrayIncludingNewItem.push(newItemObject);
-      setTasks(temporaryArrayIncludingNewItem);
-      setNewItem("");
-    } else {
-      alert("This task already exists");
-    }
+  const addItem = (newItemObject) => {
+    console.log(newItemObject);
+    // if (newItem !== "" && !tasks.includes(newItem)) {
+    //   let temporaryArrayIncludingNewItem = tasks;
+    //   temporaryArrayIncludingNewItem.push(newItemObject);
+    //   setTasks(temporaryArrayIncludingNewItem);
+    //   setNewItem("");
+    // } else {
+    //   alert("This task already exists");
+    // }
   };
 
-  const done = () => {
+  const done = (taskId) => {
     console.log("done");
   };
 
-  const removeItem = (taskName) => {
-    console.log(taskName);
+  const remove = (taskId) => {
+    console.log("remove", taskId);
     // setTasks(
     //   tasks.filter((task) => {
     //     return task != taskName;
@@ -93,40 +88,22 @@ const Home = () => {
     // );
   };
 
-  const editItem = (taskId) => {
-    console.log(taskId);
+  const edit = (taskId) => {
+    console.log("edit", taskId);
   };
 
   return (
-    <Container border="2px solid black" maxWidth="100%">
+    <Container border="2px solid gray" maxWidth="100%" pb="100px">
       <VStack>
         <Heading as="h1" mt="50px">
           To-Do App
         </Heading>
         <HStack justifyContent="space-between" py="50px">
-          <Input
-            placeholder="Item Name"
-            value={newItem}
-            onChange={(e) => {
-              setNewItem(e.target.value);
-            }}
-          />
-          <Button
-            onClick={() => {
-              addItem();
-            }}
-          >
-            Add Item
-          </Button>
+          <NewTaskForm addItem={addItem} />
         </HStack>
         <Center>
           <Container maxW="1440px" w="100%">
-            <ToDoTable
-              tasks={tasks}
-              done={done}
-              editItem={editItem}
-              removeItem={removeItem}
-            />
+            <ToDoTable tasks={tasks} done={done} edit={edit} remove={remove} />
           </Container>
         </Center>
       </VStack>

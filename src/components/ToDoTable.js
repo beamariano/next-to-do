@@ -22,24 +22,25 @@ import {
   Tr,
   UnorderedList,
   VStack,
+  IconButton,
+  Icon,
 } from "@chakra-ui/react";
 
-const ToDoTable = ({ tasks }) => {
-  console.log(tasks);
+import { CheckIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
+
+const ToDoTable = ({ tasks, done, edit, remove }) => {
   return (
     <TableContainer w="100%">
       <Table variant="simple">
-        {/* <TableCaption>Notes</TableCaption> */}
         <Thead>
           <Tr>
             <Th>Task Name</Th>
             <Th>Status</Th>
             <Th>Priority</Th>
-            <Th>Date Added</Th>
+            <Th>Date Due</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {/* <UnorderedList> */}
           {tasks.map((task, index) => (
             <Tr key={index}>
               <Td>
@@ -58,18 +59,22 @@ const ToDoTable = ({ tasks }) => {
               </Td>
               <Td>
                 <HStack spacing={1}>
-                  <Button onClick={() => done(task.id)}>Done</Button>
-                  <Button ml={10} onClick={() => editItem(task.id)}>
-                    Edit
-                  </Button>
-                  <Button ml={10} onClick={() => removeItem(task.id)}>
-                    X
-                  </Button>
+                  <IconButton
+                    icon={<CheckIcon />}
+                    onClick={() => done(task.id)}
+                  />
+                  <IconButton
+                    icon={<EditIcon />}
+                    onClick={() => edit(task.id)}
+                  />
+                  <IconButton
+                    icon={<DeleteIcon />}
+                    onClick={() => remove(task.id)}
+                  />
                 </HStack>
               </Td>
             </Tr>
           ))}
-          {/* </UnorderedList> */}
         </Tbody>
       </Table>
     </TableContainer>
