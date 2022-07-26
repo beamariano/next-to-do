@@ -41,9 +41,9 @@ const NewTaskForm = () => {
     addItemHandler(newItemObject);
   };
 
-  useEffect(() => {
-    console.log(newItemPriority);
-  });
+  // useEffect(() => {
+  //   console.log(newItemPriority);
+  // });
 
   return (
     <Box>

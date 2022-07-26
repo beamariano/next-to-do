@@ -89,8 +89,21 @@ const Home = () => {
   };
 
   const edit = (taskId) => {
-    console.log("edit", taskId);
+    const editedTaskList = tasks.map((task) => {
+      if (taskId === task.id) {
+        return {
+          ...task,
+          name: "NEW TASK",
+        };
+      }
+      return task;
+    });
+    setTasks(editedTaskList);
   };
+
+  useEffect(() => {
+    console.log(tasks);
+  }, [tasks]);
 
   return (
     <Container border="2px solid gray" maxWidth="100%" pb="100px">
